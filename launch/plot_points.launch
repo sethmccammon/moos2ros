@@ -2,7 +2,7 @@
 
 <launch>
 <!-- Bag file -->
-<node pkg="rosbag" type="play" name="rosbag" args="$(find geo_mapping)/riptide_demo.bag"/>
+<node pkg="rosbag" type="play" name="rosbag" args="$(find geo_mapping)/dylan_experiment.bag"/> 
 
 <!-- Robot Model -->
 <arg name="gui" default="False" />

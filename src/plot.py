@@ -28,13 +28,6 @@ def simple_move(msg):
 	pixel_x,pixel_y=pixel_x/10.,pixel_y/10.
 	movements.append([pixel_x,pixel_y])
 
-	o = Odometry()
-	o.header.frame_id='/map'
-	o.pose.pose.position.x=pixel_x
-	o.pose.pose.position.y=pixel_y
-	o.pose.pose.position.z=0
-	robot_pub.publish(o)
-
 
 	pub_markers(marker_pub)
 
@@ -42,34 +35,35 @@ def simple_move(msg):
 
 def pub_markers(marker_pub):
 	global movements
-	# print "here"
-	markerArray = MarkerArray()
+	if(len(movements)>15):
+		# print "here"
+		markerArray = MarkerArray()
 
-	for i,m in enumerate(movements):
-		marker = Marker()
-		marker.header.frame_id = "/map"
-		marker.type = marker.SPHERE
-		marker.action = marker.ADD
-		marker.scale.x = 0.5
-		marker.scale.y = 0.5
-		marker.scale.z = 0.5
-		marker.color.a = 1.0
-		if(i<85):
+		for i,m in enumerate(movements):
+			marker = Marker()
+			marker.header.frame_id = "/map"
+			marker.type = marker.SPHERE
+			marker.action = marker.ADD
+			marker.scale.x = 0.5
+			marker.scale.y = 0.5
+			marker.scale.z = 0.5
+			marker.color.a = 1.0
+			
 			marker.color.r = 1.
 			marker.color.g = 0.0
 			marker.color.b = 0.0
-		else:
-			marker.color.r = 0.
-			marker.color.g = 1.0
-			marker.color.b = 0.0
-		marker.pose.orientation.w = 1.0
-		marker.pose.position.x = m[0]
-		marker.pose.position.y = m[1] 
-		marker.pose.position.z = 0.
-		marker.id=i
-		markerArray.markers.append(marker)
+			# else:
+			# 	marker.color.r = 0.
+			# 	marker.color.g = 1.0
+			# 	marker.color.b = 0.0
+			marker.pose.orientation.w = 1.0
+			marker.pose.position.x = m[0]
+			marker.pose.position.y = m[1] 
+			marker.pose.position.z = 0.
+			marker.id=i
+			markerArray.markers.append(marker)
 
-	marker_pub.publish(markerArray)
+		marker_pub.publish(markerArray)
 
 
 
@@ -90,7 +84,7 @@ if __name__ == '__main__':
 
 	movements=[]
 
-	marker_pub = rospy.Publisher('visualization_marker_array', MarkerArray,queue_size=1)
+	marker_pub = rospy.Publisher('vis_m_array', MarkerArray,queue_size=1)
 	robot_pub = rospy.Publisher('/odom', Odometry,queue_size=1)
 
 	point_sub = rospy.Subscriber('/lat_lon_pose',GeoPoseStamped,simple_move)
