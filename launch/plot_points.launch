@@ -1,0 +1,28 @@
+
+
+<launch>
+<!-- Bag file -->
+<node pkg="rosbag" type="play" name="rosbag" args="$(find geo_mapping)/riptide_demo.bag"/>
+
+<!-- Robot Model -->
+<arg name="gui" default="False" />
+<param name="robot_description" textfile="$(find geo_mapping)/riptide.urdf" />
+
+<param name="use_gui" value="$(arg gui)"/>
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+<node pkg="tf" type="static_transform_publisher" name="robot_to_map" args="1 0 0 0 0 0 1 /map /base_link 100" />
+
+<!--  ****** Maps *****  -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find geo_mapping)/maps/graf.yaml ">
+    <param name="frame_id" value="/map"/>
+  </node> 
+
+ <!--  **************** Visualisation ****************  -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find geo_mapping)/config/map.rviz"/>
+  <!--<node name="rviz" pkg="rviz" type="rviz"/>-->
+
+  <!-- *****************The plotter node ************** -->
+  <node name="plotting" pkg="geo_mapping" type="plot.py" output="screen"/>
+
+ </launch>

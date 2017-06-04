@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+
+
+<robot name="slocum_g2">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="2" radius="0.2"/>
+      </geometry>
+      <origin rpy="0 1.5707 0"/>
+      <material name="orange">
+        <color rgba='1 0.4 0 1'/>
+      </material>
+      
+    </visual>
+  </link>
+
+  <link name="nose_cone">
+    <visual>
+      <geometry>
+        <sphere radius="0.2"/>
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+   <link name="acoustic_sensor">
+    <visual>
+      <geometry>
+        <cylinder radius="0.075" length="0.35"/>
+      </geometry>
+      <origin rpy="0 1.5707 0"/>
+      <material name="black">
+        <color rgba='0 0 0 1'/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="tail_cone">
+    <visual>
+      <geometry>
+        <sphere radius="0.2"/>
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+
+  <link name="tail_top">
+    <visual>
+      <geometry>
+        <box size=".2 .025 .4"/>
+      </geometry>
+      <material name="green">
+        <color rgba='0. 0.9 0 1'/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="tail_starboard">
+    <visual>
+      <geometry>
+        <box size=".2 .4 .025"/>
+      </geometry>
+      <material name="clear">
+        <color rgba='1 1 1 0.7'/>
+      </material>
+    </visual>
+  </link>
+
+<link name="tail_port">
+    <visual>
+      <geometry>
+        <box size=".2 .4 .025"/>
+      </geometry>
+      <material name="clear">
+        <color rgba='1 1 1 0.7'/>
+      </material>
+    </visual>
+  </link>
+
+  
+
+
+
+  <joint name="nose_cone_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="nose_cone"/>
+    <origin xyz="1 0 0"/>
+  </joint>
+
+  <joint name="acoustic_to_nose" type="fixed">
+    <parent link="nose_cone"/>
+    <child link="acoustic_sensor"/>
+    <origin xyz="0.2 0 0"/>
+  </joint>
+
+  <joint name="tail_cone_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="tail_cone"/>
+    <origin xyz="-1 0 0"/>
+  </joint>
+
+  
+  <joint name="tail_top_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="tail_top"/>
+    <origin xyz="-.9 0 .35"/>
+  </joint>
+
+
+ <joint name="tail_starboard_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="tail_starboard"/>
+    <origin xyz="-0.9 -0.2 0"/>
+  </joint>
+
+<joint name="tail_port_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="tail_port"/>
+    <origin xyz="-0.9 0.2 0"/>
+  </joint>
+
+ 
+
+</robot>
